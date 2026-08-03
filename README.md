@@ -153,6 +153,18 @@ Plug in your ESP32-S3 via USB and click **Upload** (the → arrow button).
 
 ---
 
+### VS Code task flow (Build + Upload + Monitor)
+
+If you're using this repo in VS Code, you can run the full CLI flow in one task:
+
+1. Open **Run Task** (`Ctrl+Shift+P` → `Tasks: Run Task`)
+2. Select **Build + Flash + Monitor ESPionage (S3)**
+3. Enter your COM port (for example `COM3`) when prompted
+
+This runs `arduino-cli` compile, upload, then serial monitor (`115200`) in sequence.
+
+---
+
 ### Step 7 — Connect and use
 
 1. Once flashed, the ESP32 will boot and create a WiFi hotspot
