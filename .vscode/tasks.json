@@ -19,7 +19,18 @@
 		{
 			"label": "Flash ESPionage (S3)",
 			"type": "shell",
-			"command": "arduino-cli upload --fqbn esp32:esp32:esp32s3:FlashSize=16M,PartitionScheme=min_spiffs,PSRAM=opi,USBMode=default,UploadSpeed=921600 --port /dev/cu.usbserial-0001 --input-dir '${workspaceFolder}/build' '${workspaceFolder}/esp32_puck'",
+			"command": "arduino-cli upload --fqbn esp32:esp32:esp32s3:FlashSize=16M,PartitionScheme=min_spiffs,PSRAM=opi,USBMode=default,UploadSpeed=921600 --port ${input:espPort} --input-dir '${workspaceFolder}/build' '${workspaceFolder}/esp32_puck'",
+			"group": "build",
+			"presentation": {
+				"reveal": "always",
+				"panel": "shared"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Monitor ESPionage (S3)",
+			"type": "shell",
+			"command": "arduino-cli monitor -p ${input:espPort} -c baudrate=${input:espBaud}",
 			"group": "build",
 			"presentation": {
 				"reveal": "always",
@@ -32,6 +43,17 @@
 			"dependsOn": [
 				"Build ESPionage (S3)",
 				"Flash ESPionage (S3)"
+			],
+			"dependsOrder": "sequence",
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "Build + Flash + Monitor ESPionage (S3)",
+			"dependsOn": [
+				"Build ESPionage (S3)",
+				"Flash ESPionage (S3)",
+				"Monitor ESPionage (S3)"
 			],
 			"dependsOrder": "sequence",
 			"group": "build",
@@ -55,6 +77,20 @@
 			"command": "arduino-cli upload --fqbn esp32:esp32:esp32s3:FlashSize=16M,PartitionScheme=min_spiffs,PSRAM=opi,USBMode=default,UploadSpeed=921600 --port COM3 --input-dir '${workspaceFolder}/build' '${workspaceFolder}/esp32_puck'",
 			"problemMatcher": [],
 			"group": "build"
+		}
+	],
+	"inputs": [
+		{
+			"id": "espPort",
+			"type": "promptString",
+			"description": "ESP32 serial port (run `arduino-cli board list` to check)",
+			"default": "COM3"
+		},
+		{
+			"id": "espBaud",
+			"type": "promptString",
+			"description": "Serial monitor baudrate",
+			"default": "115200"
 		}
 	]
 }
